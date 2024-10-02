@@ -35,7 +35,7 @@ services:
 
   vault:
     image: hashicorp/vault
-    restart: always
+    restart: unless-stopped
     networks:
       - app
       - frontend
@@ -50,3 +50,16 @@ services:
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config /vault/config/config.hcl
+
+  promtail:
+    image: grafana/promtail
+    command: -config.expand-env=true -config.file=/mnt/config/promtail-config.yaml
+    restart: unless-stopped
+    networks:
+      - app
+    volumes:
+      - .docker/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
+      - .docker/data/logs:/app/logs:ro
+      - .docker/data/promtail:/data:rw
+    environment:
+      CLIENT_URL: "${PROMTAIL_CLIENT_URL}"

@@ -15,3 +15,8 @@ listener "tcp" {
   address = "[::]:8200"
   tls_disable = "true"
 }
+
+telemetry {
+  disable_hostname = true
+  prometheus_retention_time = "12h"
+}
