@@ -14,8 +14,6 @@ services:
       - frontend
     depends_on:
       - vault
-    ports:
-      - '8080'
     volumes:
       - ./.docker/templates:/etc/nginx/templates:ro
       - .:/app
@@ -39,9 +37,6 @@ services:
     networks:
       - app
       - frontend
-    ports:
-      - "8200" # API
-      - "8201" # UI
     volumes:
       - .docker/data/logs:/vault/logs/:rw
       - .docker/data/data:/vault/data/:rw
@@ -57,6 +52,8 @@ services:
     restart: unless-stopped
     networks:
       - app
+    depends_on:
+      - vault
     volumes:
       - .docker/promtail-config.yaml:/mnt/config/promtail-config.yaml:ro
       - .docker/data/logs:/app/logs:ro
