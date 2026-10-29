@@ -32,7 +32,7 @@ services:
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
 
   vault:
-    image: hashicorp/vault:1.21
+    image: hashicorp/vault:${VAULT_VERSION:?}
     restart: unless-stopped
     networks:
       - app
