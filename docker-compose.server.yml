@@ -42,6 +42,10 @@ services:
       - .docker/data/data:/vault/data/:rw
       - .docker/data/config:/vault/config/:rw
       - .docker/data/file:/vault/file/:rw
+    pre_start:
+      - user: root
+        entrypoint: sh
+        command: -c 'chown -R 100:1000 /vault/logs /vault/data /vault/config /vault/file'
     cap_add:
       - IPC_LOCK
     entrypoint: vault server -config /vault/config/config.hcl

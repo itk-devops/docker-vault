@@ -31,7 +31,7 @@ services:
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   vault:
-    image: hashicorp/vault:${VAULT_VERSION:-v2.2.1}
+    image: hashicorp/vault:${VAULT_VERSION:-2.2.1}
     ports:
       - "8200" # API
       - "8201" # UI
